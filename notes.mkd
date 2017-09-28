@@ -1,0 +1,207 @@
+The objective of the course is to bridge the gap between human and computer
+understanding. We will do this by using C++.
+
+Using namespace std to reference the cout and cin functions are not the most
+ideal way, as there are TONS of functions that get called by executing the
+namepace std; command. It is better to individually call std::cout and
+std::cin, as it will give you more clarity as to what kind of functions you
+intend to use.
+
+Variables of Datatypes:
+-----------------------
+	Number systems: Binary, Decimal, Hexadecimal
+
+	"int a"
+	When one instantiates an int in a C++ program, A piece of main memory is
+	assigned to the variable name 'a'. The entire main memory is diveded
+	equally (into byte sizes -> 8 bits) into many parts. Conventionally an
+	integer like "a" would take up about 4 of those memory allocations (each of
+	size 1 byte). "int" is the datatype -> it prescribes the size/shape of the
+	variable, whereas the variable can be thought of a "box to store
+	something". NOTE: you can use the ampersand (&) to locate the memory
+	allocation of any given variable. E.g.
+
+		int a;
+		cout << &a << endl;
+		
+	"double f"
+	Floating point value. This will take up more memory, as it is a floating 
+	point value (it has	multiple digits after the units place. In many cases
+	of division, answers are wrongly represented as int. E.g.
+
+		int a, b, c;
+		a = 7
+		b = 8
+		c = 10
+		cout << (a + b + c) / 3 << endl;
+
+	This provides 8, although that is not the answer. This is because the
+	program understands that the answer must be integer as all the variables
+	in the equation are integers. We must change the 3 to 3.0 and that will
+	give the correct value of 8.33333.
+
+Some Bash Commands:
+-------------------
+	"echo" returns a value into the bash. You can pair this with a program
+	a.out file that uses the cin function. If a program in C++ asks for any
+	arbitrary integer, you can do the following:
+
+		echo "7" | ./a.out 
+		
+	The "|" means "into". Hence, the value 7 is provided to the program,
+	which then does something with the input it is provided. 
+		
+Boolean Expressions and If-Else Statements:
+------------------------------------------
+
+	&& --> and; || --> or; ! --> negation
+	These are all used for boolean logic statements. A common use for these
+	three is found in if-else statements. They are used to specify certain
+	cases. Eg. If color is not red OR blue, say it is green. If Mike is not
+	available on Monday AND Tuesday, then cancel the appointment. 
+
+	In the case of while loops, something is required the make the principal
+	argument (the thing inside the brackets after the while statement) false.
+	If nothing of the sort is provided, the loop will continue forever. 
+
+Functions
+---------
+
+	Functions require the co-domain and the domain stated explicitly. For
+	example, the function double my_func(double x), indicates (explicitly)
+	that the co-domain, the set of possible outputs is the set of all doubles.
+	The domain is also explicitly stated to be within the set of doubles. The
+	range of a function is not equal to the co-domain. The range is the set of
+	values that is ACTUALLY achieved, but the co-domain is a general
+	declaration of what the range will fall under. 
+
+	We can consider the output and input of a function to be sets A and B
+	respectively. There can be an n^m amount of functions that can
+	provide the output set B from the input set A (given the size of A is 
+	'n' and the size of B is 'm'. If A is the set that looks like the following:
+
+	A = {a1, a2, ..., am} and B is the output {b1, b2, ..., bn} then any
+	function is defined by the list f(a1), f(a2, ..., f(am). 
+	
+Vectors
+-------
+
+	To solve the problem of having too many variables a function input, one
+	can easily employ the use of vectors. These can hold multiple values and
+	can be expanded to hold even more memory. As the program runs, you can
+	attach new variables to the end of it. 
+
+	"An array is a stupid version of a vector". When you declare an array you
+	know exactly how much memory it will take. You cannot attach new spots to
+	an array. "There's almost never a need to use arrays over vectors".
+	Vectors are only limited when one runs out of system memory. 
+
+	All the pieces of a vector are meant to be of the same datatype. Hence,
+	when declaring a vector one must explicitly say something like:
+
+		vector<int> v; (note that just called vector would not work since a
+						datatype is supposed to be specified)
+	
+	Nesting vectors has the potential of making multi-dimensional data
+	structures, such as the likes of matrices (rows AND columns of data). 
+	
+	Adding values to a vector is done using the push_back() function of class
+	vector. pop_back() removes the last element. There are also certain
+	attributes and functions of class vector like size(), capacity(),
+	insert(), erase(), etc. (See documentation of vectors for more...). 
+
+Notes on gol.cpp
+----------------
+
+	Important: try to create two grids, one for the current world and one for
+	the next. Why is this smart? Imagine you make a change for an n * n grid.
+	Once one cell is changed, the decision for the next cell to change will be
+	affected by the change in the decision earlier. Hence, try to look one
+	matrix (vector of vectors) and then based on its state, create a new
+	matrix. Hence this will simultaneously update.
+
+	The current contents of the skeleton are simply the equivalent of argument
+	parsing in Python. It takes user inputs from the command line and runs the
+	program based on those requests.
+	
+Sorting
+-------
+
+	Consider an array of size n: 10 2 3 45 5 9 11
+	
+	We understand that sorting this from smallest to greatest can be done by
+	built in methods. However, manually doing this will require the use of
+	nested for loops. First, we put a pointer at the first element of the
+	to-be-sorted array, and run a for loop across the elements, STARTING from
+	the pointer. We then find the minimum of all the elements, and swap the
+	number with the pointer. Eg. The first step in the above array would
+	return this: 2 10 3 45 5 9 11.
+
+	We now (using iteration from the higher for loop) (the nested for loop
+	iterates from pointer, to the end of the element), move the pointer one
+	element to the right, and continue the process until the pointer is at the
+	second-last element. There is no use of scanning the array/vector if the
+	pointer is at the last element (we know that this is the greatest element
+	by process of sorting). 
+
+Constant Variables
+------------------
+
+	The const declaration is like a contract to the compiler that the variable
+	that is assigned the const declaration wil not be changed in value. If
+	this contract is broken, then the compiler will stop its processes. 
+
+Typecasting
+-----------
+
+	In python, it is possible to cast an int as a floating point number.
+	Likewise, in C++ it is also possible to do the same, but with different
+	type of syntax. 
+
+	Consider the data type char, which revolves around the ASCII values (in
+	alphanumerical representations) of some characters (like digits, upper
+	case and lower case letters, symbols etc.). In this case, if we were to
+	find the first char, which is definitely not a digit or letter, we may do 
+		(char)1; 
+
+	Note that this is a bit different from python, where one would have to do
+	something like
+		int a = 100
+		float(a)
+			>> 100.0
+
+	- Example: 
+		
+		We want to remove all lower case letters. We would do this using this
+		code:
+
+		string removeLower(const string& s) {
+			string s = "AbRa1CadBra";
+			string r;
+			for(size_t i = 0; i < s.length(); i++) {
+				if(s[i] < 'a' || s[i] > 'z') {
+					r += s[i]
+				}
+			}
+		}
+		return r;
+
+		The string r is the return string, while s is the string that needs to
+		be modified. We run a loop through all the member of the string (which
+		is essentially an array of characters one after another). By analyzing
+		each element (which, again, is bound to be a char), we can judge by
+		comparision (as each char has a hidden ASCII value), whether its
+		magnitude is less than that of the value of 'a' or greater than the
+		value of 'z'. If the case is true, then we append that char to the
+		return string. This is possible to do because string r, like any other
+		string is also like an array (hence appending and adding is possible). 
+
+	
+
+
+	
+
+	
+
+
+
