@@ -6,11 +6,11 @@
  * and the book, please list everything.  And remember- citing a source does
  * NOT mean it is okay to COPY THAT SOURCE.  What you submit here **MUST BE
  * YOUR OWN WORK**.
- * References:
+ * References: Game of Life Wikipedia Page, fopen() fwrite() fread() documentation
  *
  *
  * Finally, please indicate approximately how many hours you spent on this:
- * #hours: 
+ * #hours: 5
  */
 
 #include <iostream>
@@ -48,14 +48,6 @@ void writeState(FILE* f, vector<vector<bool> > g);
 /* Prototypes of debugging functions */
 void checkDim(vector<vector<bool> > V);
 void printGrid(vector<vector<bool> >& V);
-#if 0
-// neighbour counter
-size_t nbrCount(size_t i, size_t j, const vector<vector<bool> >& g);
-void update(); //transfer from old to new state
-int initFromFile(const string& fname); // read initial state from file
-void mainLoop(); // update state, write state, sleap, repeat ...
-void dumpState(FILE* f);
-#endif
 
 char text[3] = ".O";
 
@@ -116,30 +108,10 @@ void mainLoop() {
 		writeState(fworld, v2);
 		fclose(fworld);
 	} else {}
-
-	/*
-	if(max_gen == 0) {
-		while(true) {
-			FILE* fworld = fopen("/tmp/gol-world-current", "wb");
-			writeState(fworld, v2);
-			update(v1, v2);
-			sleep(1);
-		}
-		fclose(fworld);
-	} else if(max_gen > 0) {
-		FILE* fworld = fopen("/tmp/gol-world-current", "wb");
-		for(size_t gens = 0; gens < max_gen; gens++) {
-			update(v1, v2);
-		}
-		writeState(fworld, v2);
-		fclose(fworld);
-	}
-	*/
 }
 
 
 void update(vector<vector<bool> >& v1, vector<vector<bool> >& v2) {
-	/* first lets evolve in stdout ONCE */
 	size_t neighbours;
 	size_t row, col; 
 	size_t rows = v1.size(); size_t cols = v1.back().size();
@@ -168,9 +140,6 @@ void update(vector<vector<bool> >& v1, vector<vector<bool> >& v2) {
 
 size_t nCount(size_t i, size_t j, const vector<vector<bool> >& g) {
 	size_t count = 0;
-	/* check for any true values in all directions.
-	 * These include, left, right, up, down, and 
-	 * all four diagonals. */
 	size_t row = i; size_t col = j;
 	size_t rows = g.size(); size_t cols = g.back().size();
 	bool present_right, present_left, present_up, present_down;
@@ -211,9 +180,6 @@ vector<vector<bool> > initiate(const string& fname) {
 			V[current_row].push_back(true);
 		}
 	}
-	// the last row will have no members due
-	// to the architecture of the while loop 
-	// above so we will pop_back the last row
 	V.pop_back();
 	fclose(f);
 	return V;
@@ -224,11 +190,9 @@ void writeState(FILE* f, vector<vector<bool> > V) {
 	rows = V.size(); cols = V.back().size();
 	for(row = 0; row < rows; row++) {
 		for(col = 0; col < cols; col++) {
-			/* write here */
 			char toWrite = text[V[row][col]];
 			fwrite(&toWrite, 1, 1, f);
 		}
-		/* write new lines here */
 		fwrite("\n", 1, 1, f);
 	}	
 }
