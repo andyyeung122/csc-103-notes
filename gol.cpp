@@ -36,18 +36,23 @@ static const char* usage =
 
 size_t max_gen = 0; /* if > 0, fast forward to this generation. */
 string wfilename =  "/tmp/gol-world-current"; /* write state here */
-FILE* fworld; /* handle to file wfilename. */
+FILE* fworld = 0; /* handle to file wfilename. */
 string initfilename = "/tmp/gol-world-current"; /* read initial state from here. */
 
 /* Prototypes of function to use */
 size_t nCount(size_t i, size_t j, const vector<vector<bool> >& g);
-void update(vector<vector<bool> >&  v1, vector<vector<bool> >& v2);
-vector<vector<bool> > initiate(const string& fileName);
+void update();
+int initiate(const string& fileName);
 void mainLoop();
-void writeState(FILE* f, vector<vector<bool> > g);
+void writeState(FILE* f);
+
 /* Prototypes of debugging functions */
 void checkDim(vector<vector<bool> > V);
 void printGrid(vector<vector<bool> >& V);
+
+/* declaration of global variables v1 and v2 */
+vector<vector<bool> > v1, v2;
+
 
 char text[3] = ".O";
 
@@ -89,29 +94,42 @@ int main(int argc, char *argv[]) {
 
 void mainLoop() {
 	/* update, write, sleep */
-	vector<vector<bool> > v1, v2;
-	v1 = initiate(initfilename);
-	v2 = v1;
-	if(max_gen == 0) {
-		while(true) {
-			fworld = fopen(wfilename.c_str(), "wb");
-			writeState(fworld, v2);
-			fclose(fworld);	
-			update(v1, v2);
-			sleep(1);
-		}
-	} else if(max_gen > 0) {
-		for(unsigned int i = 0; i < max_gen; i++) {
-			update(v1, v2);
-		}
-		fworld = fopen(wfilename.c_str(), "wb");
-		writeState(fworld, v2);
-		fclose(fworld);
-	} else {}
+	int check;
+	check = initiate(initfilename);
+	if(check == 1) {
+		v2 = v1;
+		if(max_gen == 0) {
+			while(true) {
+				if(wfilename == "-") {
+					fworld = stdout;
+				} else {
+					fworld = fopen(wfilename.c_str(), "wb");
+				}
+				writeState(fworld);
+				fclose(fworld);	
+				update();
+				sleep(1);
+			}
+		} else if(max_gen > 0) {
+			for(unsigned int i = 0; i < max_gen; i++) {
+				update();
+			}
+			if(wfilename == "-") {
+				fworld = stdout;
+			} else {
+				fworld = fopen(wfilename.c_str(), "wb");
+			}
+			writeState(fworld);
+			fclose(fworld);
+		} else {}
+	} else {
+		cout << "FILE DID NOT INITIATE PROPERLY\n";
+		exit(1);
+	}
 }
 
 
-void update(vector<vector<bool> >& v1, vector<vector<bool> >& v2) {
+void update() {
 	size_t neighbours;
 	size_t row, col; 
 	size_t rows = v1.size(); size_t cols = v1.back().size();
@@ -163,34 +181,43 @@ size_t nCount(size_t i, size_t j, const vector<vector<bool> >& g) {
 }
 
 
-vector<vector<bool> > initiate(const string& fname) {
-	FILE* f = fopen(initfilename.c_str(), "rb");
-	vector<vector<bool> > V;
-	V.push_back(vector<bool>());
-	size_t current_row = 0;
-	char c;
-
-	while(fread(&c, 1, 1, f) != 0) {	
-		if(c == '\n') {
-			V.push_back(vector<bool>());
-			current_row++;
-		} else if(c == '.') {
-			V[current_row].push_back(false);
-		} else if(c == 'O') {
-			V[current_row].push_back(true);
-		}
+int initiate(const string& fname) {
+	FILE *f;
+	if(fname != "-") {
+		f = fopen(fname.c_str(), "rb");
+	} else {
+		f = stdin;
 	}
-	V.pop_back();
-	fclose(f);
-	return V;
+
+	if(f == NULL) {
+		return -1;
+	} else {
+		v1.push_back(vector<bool>());
+		size_t current_row = 0;
+		char c;
+
+		while(fread(&c, 1, 1, f) != 0) {	
+			if(c == '\n') {
+				v1.push_back(vector<bool>());
+				current_row++;
+			} else if(c == '.') {
+				v1[current_row].push_back(false);
+			} else if(c == 'O') {
+				v1[current_row].push_back(true);
+			}
+		}
+		v1.pop_back();
+		fclose(f);
+		return 1;
+	}
 }
 
-void writeState(FILE* f, vector<vector<bool> > V) {
+void writeState(FILE* f) {
 	size_t row, col, rows, cols = 0;
-	rows = V.size(); cols = V.back().size();
+	rows = v2.size(); cols = v2.back().size();
 	for(row = 0; row < rows; row++) {
 		for(col = 0; col < cols; col++) {
-			char toWrite = text[V[row][col]];
+			char toWrite = text[v2[row][col]];
 			fwrite(&toWrite, 1, 1, f);
 		}
 		fwrite("\n", 1, 1, f);

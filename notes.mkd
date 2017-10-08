@@ -196,7 +196,7 @@ Typecasting
 		return string. This is possible to do because string r, like any other
 		string is also like an array (hence appending and adding is possible). 
 
-	
+
 
 
 	
