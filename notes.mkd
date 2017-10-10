@@ -230,4 +230,4 @@ Pointers
 		Datatype of *p == integer value (dereferenced) (*p points to the value
 						  held by p, which is a memory location) 
 	
-
+		
