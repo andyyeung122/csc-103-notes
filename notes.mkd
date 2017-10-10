@@ -196,12 +196,38 @@ Typecasting
 		return string. This is possible to do because string r, like any other
 		string is also like an array (hence appending and adding is possible). 
 
+Pointers
+--------
 
+	Pointers have tha ability to store the memory address of datatypes. For
+	example, int* is a NEW DATATYPE that has the ability to store the memory
+	address of another datatype. For example one might declare:
 
+		int x = 23;
+		int* p = &x;
 
+	In the example above, x is declared to be an integer, while p is declared
+	to be a pointer that holds the address of x. The memory location is
+	provided by the & (ampersand) sign. The purpose of putting 'int' in front
+	of the '*' is to tell the compiler that the pointer 'points' to the
+	location of an int. The location of a variable is essentially like an index
+	in a large array, the array being analagous to main memory. 
+
+	A pointer itself will also have a memory location. Hence, in order to
+	store the memory location you must nest asterisks, indicating a pointer TO
+	a pointer datatype. Hence:
+
+		int** q = &p 
+
+	In the example above, 'q' contains the address of 'p'. You may also
+	dereference a pointer-type variable by putting a '*' in front of it. In
+	the first example, we said that p is the memory location of x. Hence,
+	saying cout << *p would return the value of x. This is essentially reading from
+	memory. However, something like *p = 3, would assign the value to the
+	memory location held by p. This is writing to memory.
+
+		Datatype of p == memory index/location
+		Datatype of *p == integer value (dereferenced) (*p points to the value
+						  held by p, which is a memory location) 
 	
-
-	
-
-
 
