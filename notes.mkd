@@ -205,7 +205,7 @@ Pointers
 
 		int x = 23;
 		int* p = &x;
-
+		
 	In the example above, x is declared to be an integer, while p is declared
 	to be a pointer that holds the address of x. The memory location is
 	provided by the & (ampersand) sign. The purpose of putting 'int' in front
@@ -230,4 +230,25 @@ Pointers
 		Datatype of *p == integer value (dereferenced) (*p points to the value
 						  held by p, which is a memory location) 
 	
-		
+Sets
+----
+
+	Identical to mathematical sets, where values in a universe may not occur
+	more than once. A disadvantage to sets is the mere fact that random-access
+	or look-up time is slower. For vectors we can simply look up by indices,
+	while sets cannot do that. 
+
+	Sets store their data using binary search tree structure. A root iused to
+	compare incoming value, which are then stored either to the left or right
+	of the root. These new values then become nodes that then are used as
+	comparisions similiar to the role of the root in the previous set. 
+
+	Binary Search Tree Structure:
+
+<img src = "https://www.tutorialspoint.com/data_structures_algorithms/images/binary_search_tree.jpg">
+
+	Disadvantages:
+		- Setting the i'th element takes ~i steps in a set, but it takes just
+		  1 step for a vector (by using V[i]). 
+	Features they share:
+		- Easy to add new elements (V.push_back(x) ~= s.insert(x)). 
