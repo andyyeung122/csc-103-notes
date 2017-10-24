@@ -251,4 +251,16 @@ Sets
 		- Setting the i'th element takes ~i steps in a set, but it takes just
 		  1 step for a vector (by using V[i]). 
 	Features they share:
-		- Easy to add new elements (V.push_back(x) ~= s.insert(x)). 
+		- Easy to add new elements (V.push_back(x) ~= s.insert(x)).
+	
+	NOTE: They are modelling mathematical sets, so they don't store
+	duplicates. Below is an example of some useful functionality with sets:
+
+		s.insert(23);
+		cout << s.size(); // prints 10
+		s.insert(230; 
+		cout << s.size(); // still 10 because the 23 is a repeat of an
+							 existing value
+
+	Aside: Boolean functions as sets. Say universe is U containing,
+	exclusively, boolean values. 
