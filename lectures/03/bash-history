@@ -1,0 +1,4 @@
+make
+./if-while 
+make && ./if-while 
+echo 1 2 3 4 5 | ./if-while

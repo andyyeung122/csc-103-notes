@@ -1,0 +1,6 @@
+vim hello.cpp  # edit text file hello.cpp
+g++ hello.cpp  # compile program to produce a.out (the executable version)
+./a.out        # run the program
+echo $?        # check "exit status" of last command
+# to print a message only if a.out returns 0 from main(), do this:
+./a.out && echo "it worked :D"

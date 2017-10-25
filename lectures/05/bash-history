@@ -1,0 +1,8 @@
+make
+./collatz 
+make
+./collatz 
+echo {1..10}
+echo {1..10} | ./collatz 
+echo {1..500} | ./collatz | less
+echo {1..500} | ./collatz | awk '{print $4 " " $1}' | sort -rn | less
