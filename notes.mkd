@@ -288,7 +288,20 @@ Recursive Programming
 				// so, we use f itself as a subroutine! This is in some ways
 				// equivalent to the induction step in mathematical induction
 	
-	Some examples of recursive coding
+	Some examples of recursive coding: finding the value of n! (n factorial)
+
+		int fac(int n) {
+			if(n == 0) {
+				// This is the base case. The program will objectively return
+				// numerical value when the value for n is 0.
+				return 1;
+			} else {
+				return n * fac(n-1);
+			}
+			// Now we can assume T(n-1), i.e., our fac() works on n-1. So 
+			// fac(n-1) = (n-1)! It is also important to not that 
+			// n! = n(n-1)!
+		}
 
 	
 
