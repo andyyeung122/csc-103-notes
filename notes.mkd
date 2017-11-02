@@ -263,4 +263,32 @@ Sets
 							 existing value
 
 	Aside: Boolean functions as sets. Say universe is U containing,
-	exclusively, boolean values. 
+	exclusively, boolean values.
+
+Recursive Programming
+---------------------
+	
+	Proofs by induction can involve an unbounded # of implications. Here's how
+	it works. Usual setting: we want to prove that some property T (a property
+	of integers.
+
+	What oes this have to do with programming? We can write programs with the
+	same structure. Here's an outline:
+
+		T(n) = "any program does the right thing on any input of size 'n'."
+	
+	Then we can write a self-referencing program like this:
+	
+		int f(int x) {
+			if(size(x) == 1) // this implies that n == 1
+				// explicitly solve (this is like the base-case in induction)
+				// hard code the answer
+			else 
+				// build answer to x from f(x') where size(x') < size(x);
+				// so, we use f itself as a subroutine! This is in some ways
+				// equivalent to the induction step in mathematical induction
+	
+	Some examples of recursive coding
+
+	
+
