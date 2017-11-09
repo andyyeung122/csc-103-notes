@@ -303,5 +303,31 @@ Recursive Programming
 			// n! = n(n-1)!
 		}
 
-	
+Some Examples of Recursive Programming
+--------------------------------------
 
+	We can create a GCD program using recursion. Important still to note that
+	we require 1. a base case, and 2. the assumption that the thing works for
+	all *smaller* inputs, and build solution to the input you've given.
+
+		int gcd(int a, int b) {
+			if(a % b == 0) return b;
+			// note: size of input == second # (b)
+			return gcd(b, a % b);
+		}
+	
+	Example trace: 
+		(8, 12) --> (12, 8) --> (8, 4)  --> return 4 because 8 % 4 == 0
+		(9, 6) --> (6, 3) --> return 3 because 6 % 3 == 0
+
+	Now the extended gcd:
+		Fact - gcd(a, b) = ua + vb 
+			where u and v are in the set of all integers
+
+	Example: a = 8, and b = 12. Then, in this case, the gcd is gcd(8, 12) = 4
+			 This can also be represented as [(-1) * 8] + [(1) * 12]
+
+	Question: how to find u =/= v?  
+
+	Prototype: int xgcd(int a, int b, int& u, int& v);
+		In this case, a and b are the inputs. u and v are the outputs.
